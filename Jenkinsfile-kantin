@@ -117,7 +117,7 @@ pipeline {
             
             steps {
                 sh '''
-            docker build -t devopseasylearning2021/kantin11:001 .
+            docker build -t devopseasylearning2021/kantin11:002 .
                 '''
             }
         }
@@ -137,7 +137,7 @@ pipeline {
      stage('Docker push ') {
             steps {
                sh '''
-             sudo  docker push devopseasylearning2021/kantin11:001 
+             sudo  docker push devopseasylearning2021/kantin11:002 
                 '''
             }
         }
