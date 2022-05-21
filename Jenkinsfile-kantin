@@ -117,12 +117,18 @@ pipeline {
             
             steps {
                 sh '''
-            docker build -t devopseasylearning2021/kantin11:002 .
+            docker build -t devops:001:002 .
                 '''
             }
         }
     
-    
+        stage('Tag image ') {
+            steps {
+               sh '''
+              sudo docker tag devops:001  devopseasylearning2021/devops1:002 
+                '''
+            }
+        }
     
      stage('Docker Login') {
 
@@ -137,7 +143,7 @@ pipeline {
      stage('Docker push ') {
             steps {
                sh '''
-             sudo  docker push devopseasylearning2021/kantin11:002 
+             docker push devopseasylearning2021/devops1:002 
                 '''
             }
         }
