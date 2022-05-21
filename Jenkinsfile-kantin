@@ -1,136 +1,144 @@
 pipeline {
     agent any
-
-    environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerHub')
+   
+   environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
     options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
      artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
       disableConcurrentBuilds() }
+      
 
     stages {
-        stage('clean') {
-
-           agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-
-            steps {
-                sh '''
-            mvn clean
-                '''
-            }
-        }
-    
-    
-    
-        stage('compile') {
-
-            agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-            steps {
-                sh '''
-            mvn compile
-                '''
-            }
-        }
-
-
-
-
-        stage('validate') {
-
-            agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-            steps {
-               sh '''
-             mvn validate
-                '''
-            }
-        }
-    
-    
-        stage('package') {
-
-
-            agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-            steps {
-                sh '''
-            mvn package    
-            ls -l webapp/target
-            pwd
-
-                '''
-            }
-        }
-    
-    
-    
-    
-        stage('test') {
-
-
-            agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-            steps {
-                sh '''
-            mvn test
-                '''
-            }
-        }
-    
-    
-        stage('verify') {
-
-            agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-            steps {
-                sh '''
-            mvn verify
-                '''
-            }
-        }
-    
-    
-        stage('install') {
-
-            agent {
-        docker { image 'maven:3.8.5-openjdk-8-slim' }
-    }
-            steps {
-                sh '''
-            mvn install
-                '''
-            }
-        }
         
-    
-        stage('docker build') {
-            
-            
+       stage('Setup parameters') {
             steps {
-                sh '''
-            docker build -t devops:001:002 .
-                '''
+                script { 
+                    properties([
+                        parameters([
+                          
+
+                            string(
+                                defaultValue: '001', 
+                                name: 'ImageTAG', 
+                                trim: true
+                            )
+                        ])
+                    ])
+                }
             }
         }
-    
-        stage('Tag image ') {
+
+
+
+
+        stage('clean') {
+            agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
             steps {
                sh '''
-              sudo docker tag devops:001  devopseasylearning2021/devops1:002 
-                '''
+               rm -rf webapp/target/webapp.war || true
+              mvn clean
+               '''
             }
         }
-    
-     stage('Docker Login') {
+
+        stage('compile') {
+            agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+             mvn compile
+               '''
+            }
+        }
+
+stage('validate') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+               mvn validate
+               '''
+            }
+        }
+
+
+
+stage('test') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+             mvn test 
+               '''
+            }
+        }
+
+stage('package') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+            
+              mvn package
+              ls -l webapp/target
+              pwd
+               '''
+            }
+        }
+
+stage('verify') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+              mvn verify
+               '''
+            }
+        }
+
+
+stage('install') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+           mvn install
+               '''
+            }
+        }
+       
+stage('build ') {
+
+            steps {
+               sh '''
+           docker build -t devopseasylearning2021/kantin:$ImageTAG .
+               '''
+            }
+        }
+       
+
+
+
+
+
+      stage('Docker Login') {
 
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -143,30 +151,12 @@ pipeline {
      stage('Docker push ') {
             steps {
                sh '''
-             docker push devopseasylearning2021/devops1:002 
+              docker push devopseasylearning2021/kantin:$ImageTAG 
                 '''
             }
         }
-    
-    
-    
-    
-    
-    
+
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
