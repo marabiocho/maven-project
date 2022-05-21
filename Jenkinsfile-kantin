@@ -101,7 +101,6 @@ pipeline {
         }
         
     
-        stages {
         stage('docker build') {
             
             
@@ -111,7 +110,7 @@ pipeline {
                 '''
             }
         }
-    }
+    
     
     
     
