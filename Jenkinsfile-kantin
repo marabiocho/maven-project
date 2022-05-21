@@ -61,7 +61,7 @@ pipeline {
     
     
     
-        stage('package') {
+        stage('test') {
 
 
             agent {
