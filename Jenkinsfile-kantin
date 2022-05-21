@@ -117,7 +117,7 @@ pipeline {
             
             steps {
                 sh '''
-            docker build -t devopseasylearning:001 .
+            docker build -t devopseasylearning/kantin11:001 .
                 '''
             }
         }
