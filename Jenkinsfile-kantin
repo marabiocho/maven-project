@@ -158,10 +158,11 @@ stage('build ') {
         }
 
 
-        stage('Docker to docker ') {
+        stage('Deploy to docker ') {
             steps {
                sh '''
               docker run -d -p 8080:8080 devopseasylearning2021/kantin:$ImageTAG 
+              curl ifconfig.co
                 '''
             }
         }
