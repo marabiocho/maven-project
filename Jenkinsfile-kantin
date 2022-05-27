@@ -23,7 +23,7 @@ pipeline {
                                 defaultValue: 'kantin-feature', 
                                 name: 'BranchName', 
                                 trim: true
-                            )
+                            ),
 
                             string(
                                 defaultValue: '001', 
