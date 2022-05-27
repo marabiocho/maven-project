@@ -19,7 +19,11 @@ pipeline {
                 script { 
                     properties([
                         parameters([
-                          
+                            string(
+                                defaultValue: 'kantin-feature', 
+                                name: 'BranchName', 
+                                trim: true
+                            )
 
                             string(
                                 defaultValue: '001', 
@@ -33,7 +37,17 @@ pipeline {
         }
 
 
+        stage('cloning') {
+            
 
+            steps {
+               sh '''
+               rm -rf ./*
+               git clone -b $BranchName https://github.com/marabiocho/maven-project.git
+               cd maven-project
+               '''
+            }
+        }
 
         stage('clean') {
             agent {
@@ -43,6 +57,7 @@ pipeline {
             steps {
                sh '''
                rm -rf webapp/target/webapp.war || true
+               ls -l
               mvn clean
                '''
             }
@@ -161,7 +176,8 @@ stage('build ') {
         stage('Deploy to docker ') {
             steps {
                sh '''
-              docker run -d -p 8091:8080 devopseasylearning2021/kantin:$ImageTAG 
+               docker rm -f checking || true
+              docker run -d -p 8040:8080 devopseasylearning2021/kantin:$ImageTAG 
               curl ifconfig.co
                 '''
             }
