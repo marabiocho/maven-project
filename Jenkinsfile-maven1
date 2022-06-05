@@ -65,7 +65,7 @@ stage('install') {
 stage('build') {
             steps {
                  sh '''
-                docker build -t devopseasylearning2021/valdes:3.6.3 .
+                sudo docker build -t devopseasylearning2021/valdes:3.6.3 .
                 '''
             }
         }
