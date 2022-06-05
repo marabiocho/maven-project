@@ -21,7 +21,7 @@ stage('Setup parameters') {
                     properties([
                         parameters([
                             string(
-                                defaultValue: 'kantin-feature', 
+                                defaultValue: 'maven-project', 
                                 name: 'BranchName', 
                                 trim: true
                             ),
