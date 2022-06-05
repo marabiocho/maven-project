@@ -124,7 +124,7 @@ stage('Docker push ') {
 stage('Deploy to docker ') {
             steps {
                sh '''
-               docker rm -f checking || true
+               sudo docker rm -f checking || true
              sudo docker run -d -p 8040:8080 devopseasylearning2021/kantin:$ImageTAG 
               curl ifconfig.co
                 '''
