@@ -7,9 +7,38 @@ pipeline {
          environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}  
-        
+        options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
+     artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
+      disableConcurrentBuilds() }
+
+
 
     stages {
+
+stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                            string(
+                                defaultValue: 'kantin-feature', 
+                                name: 'BranchName', 
+                                trim: true
+                            ),
+
+                            string(
+                                defaultValue: '001', 
+                                name: 'ImageTAG', 
+                                trim: true
+                            )
+                        ])
+                    ])
+                }
+            }
+        }
+
+
+
         stage('clean') {
             steps {
                 sh '''
@@ -62,11 +91,12 @@ stage('install') {
         }
 
 
-stage('build') {
+stage('build ') {
+
             steps {
-                 sh '''
-                sudo docker build -t devopseasylearning2021/valdes:3.6.3 .
-                '''
+               sh '''
+          sudo docker build -t devopseasylearning2021/kantin:$ImageTAG .
+               '''
             }
         }
 
@@ -81,14 +111,28 @@ stage('Login') {
 			}
 		}
 
-stage('Push') {
-
-			steps {
-				sh '''
-               sudo docker push devopseasylearning2021/kantin:3.6.3
+stage('Docker push ') {
+            steps {
+               sh '''
+              sudo docker push devopseasylearning2021/kantin:$ImageTAG 
                 '''
-			}
-		}
+            }
+        }
+
+
+
+stage('Deploy to docker ') {
+            steps {
+               sh '''
+               docker rm -f checking || true
+             sudo docker run -d -p 8040:8080 devopseasylearning2021/kantin:$ImageTAG 
+              curl ifconfig.co
+                '''
+            }
+        }
+
+
+
 
 
 
@@ -96,4 +140,16 @@ stage('Push') {
 }
 
 
+
+
+
+
+
+
+
+
+
 }
+
+
+
