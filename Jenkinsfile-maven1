@@ -4,7 +4,9 @@ pipeline {
                 label 'jenkins-node'
             }
 
-           
+         environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}  
         
 
     stages {
@@ -63,7 +65,7 @@ stage('install') {
 stage('build') {
             steps {
                  sh '''
-                sudo docker build -t devopseasylearning2021/kantin:3.6.3 .
+                docker build -t devopseasylearning2021/valdes:3.6.3 .
                 '''
             }
         }
