@@ -47,6 +47,16 @@ stage('Setup parameters') {
             }
         }
 
+        stage('Build') {
+            steps {
+                def scannerHome = tool 'SonarQubeScanner3'
+                withSonarQubeEnv('SonarQube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
+
+
 stage('validate') {
             steps {
                 sh '''
