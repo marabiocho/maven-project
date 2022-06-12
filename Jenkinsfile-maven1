@@ -124,12 +124,10 @@ stage('Docker push ') {
 
 
 
-stage('Deploy to docker ') {
+stage('Deploy to kubernetes ') {
             steps {
                sh '''
-               sudo docker rm -f checking || true
-             sudo docker run -d -p 80:8080 devopseasylearning2021/kantin:$ImageTAG 
-              curl ifconfig.co
+               
                 '''
             }
         }
