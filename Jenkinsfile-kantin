@@ -148,7 +148,7 @@ stage('build ') {
             steps {
                sh '''
                
-          sudo su kantin -p kantin docker build -t devopseasylearning2021/kantin:$ImageTAG .
+          sudo -S <<< kantin ps -ef | grep kantin docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
         }
@@ -196,4 +196,3 @@ stage('build ') {
 
 
 }   
-
