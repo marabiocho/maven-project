@@ -147,7 +147,7 @@ stage('build ') {
 
             steps {
                sh '''
-               sudo -s -p "Password: " password
+               sudo -S -p kantin
           docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
@@ -171,7 +171,7 @@ stage('build ') {
      stage('Docker push ') {
             steps {
                sh ''
-	       sudo -s -p "Password: " kantin
+	       
                  docker push devopseasylearning2021/kantin:$ImageTAG 
                 '''
             }
