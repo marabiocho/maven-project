@@ -1,3 +1,4 @@
+
 pipeline {
     agent {
                 label 'jenkins-node1'
@@ -53,8 +54,8 @@ pipeline {
 
         stage('clean') {
             agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+                label 'jenkins-node1'
+            }
 
             steps {
                sh '''
@@ -67,8 +68,8 @@ pipeline {
 
         stage('compile') {
             agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+                label 'jenkins-node1'
+            }
 
             steps {
                sh '''
@@ -79,8 +80,8 @@ pipeline {
 
 stage('validate') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+                label 'jenkins-node1'
+            }
 
             steps {
                sh '''
@@ -93,8 +94,8 @@ stage('validate') {
 
 stage('test') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+                label 'jenkins-node1'
+            }
 
             steps {
                sh '''
@@ -115,8 +116,8 @@ stage('package') {
 
 stage('verify') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+                label 'jenkins-node1'
+            }
 
             steps {
                sh '''
@@ -128,8 +129,8 @@ stage('verify') {
 
 stage('install') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+                label 'jenkins-node1'
+            }
 
             steps {
                sh '''
@@ -146,7 +147,7 @@ stage('build ') {
 
             steps {
                sh '''
-           docker build -t devopseasylearning2021/kantin:$ImageTAG .
+          sudo docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
         }
@@ -159,7 +160,7 @@ stage('build ') {
       stage('Docker Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW |sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
@@ -169,7 +170,7 @@ stage('build ') {
      stage('Docker push ') {
             steps {
                sh '''
-              docker push devopseasylearning2021/kantin:$ImageTAG 
+              sudo docker push devopseasylearning2021/kantin:$ImageTAG 
                 '''
             }
         }
@@ -178,8 +179,8 @@ stage('build ') {
         stage('Deploy to docker ') {
             steps {
                sh '''
-               docker rm -f checking || true
-              docker run -d -p 8043:8080 devopseasylearning2021/kantin:$ImageTAG 
+              sudo docker rm -f checking || true
+              sudo docker run -d -p 8043:8080 devopseasylearning2021/kantin:$ImageTAG 
               curl ifconfig.co
                 '''
             }
@@ -193,15 +194,4 @@ stage('build ') {
 
 
 
-
-
-
-
-
-
-
-
-}
-
-
-
+}   
