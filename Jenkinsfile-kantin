@@ -141,10 +141,7 @@ stage('install') {
 
 
 stage('build ') {
-        
-         agent {
-                label 'jenkins-node1' args '-u root'
-            } 
+
 
             steps {
                sh '''
