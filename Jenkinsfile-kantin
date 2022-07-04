@@ -147,7 +147,7 @@ stage('build ') {
 
             steps {
                sh '''
-          sudo -S docker build -t devopseasylearning2021/kantin:$ImageTAG .
+          sudo -S kantin docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
         }
@@ -160,7 +160,7 @@ stage('build ') {
       stage('Docker Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW |sudo -S docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW |sudo -S kantin docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
@@ -170,7 +170,7 @@ stage('build ') {
      stage('Docker push ') {
             steps {
                sh '''
-              sudo -S docker push devopseasylearning2021/kantin:$ImageTAG 
+              sudo -S kantin docker push devopseasylearning2021/kantin:$ImageTAG 
                 '''
             }
         }
@@ -179,8 +179,8 @@ stage('build ') {
         stage('Deploy to docker ') {
             steps {
                sh '''
-              sudo -S docker rm -f checking || true
-              sudo -S docker run -d -p 8043:8080 devopseasylearning2021/kantin:$ImageTAG 
+              sudo -S kantin docker rm -f checking || true
+              sudo -S kantin docker run -d -p 8043:8080 devopseasylearning2021/kantin:$ImageTAG 
               curl ifconfig.co
                 '''
             }
