@@ -148,7 +148,7 @@ stage('build ') {
             steps {
                sh '''
                
-           docker build -t devopseasylearning2021/kantin:$ImageTAG .
+          sudo docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
         }
@@ -161,7 +161,7 @@ stage('build ') {
       stage('Docker Login') {
 
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW |sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
@@ -171,7 +171,7 @@ stage('build ') {
      stage('Docker push ') {
             steps {
                sh '''
-               docker push devopseasylearning2021/kantin:$ImageTAG 
+               sudo docker push devopseasylearning2021/kantin:$ImageTAG 
                 '''
             }
         }
