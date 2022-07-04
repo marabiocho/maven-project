@@ -147,7 +147,7 @@ stage('build ') {
 
             steps {
                sh '''
-               sudo su kantin -pwd kantin
+               
           sudo docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
