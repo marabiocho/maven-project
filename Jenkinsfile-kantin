@@ -129,7 +129,7 @@ stage('verify') {
 
 stage('install') {
     agent {
-                label 'jenkins-node1'
+                label 'jenkins-node1' args '-u root'
             }
 
             steps {
@@ -144,11 +144,15 @@ stage('install') {
 
 
 stage('build ') {
+        
+         agent {
+                label 'jenkins-node1' args '-u root'
+            } 
 
             steps {
                sh '''
                
-          sudo -S  kantin  docker build -t devopseasylearning2021/kantin:$ImageTAG .
+         docker build -t devopseasylearning2021/kantin:$ImageTAG .
                '''
             }
         }
