@@ -128,9 +128,6 @@ stage('verify') {
 
 
 stage('install') {
-    agent {
-                label 'jenkins-node1' args '-u root'
-            }
 
             steps {
                sh '''
