@@ -1,7 +1,7 @@
 
 pipeline {
     agent {
-                any
+                label ("jenkins-node1")
             }
    
    environment {
