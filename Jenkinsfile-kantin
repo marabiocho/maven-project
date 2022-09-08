@@ -118,7 +118,7 @@ stage('package') {
 stage('verify') {
     agent {
                 label 'jenkins-slave1'
-            }
+    } 
 
             steps {
                sh '''
@@ -137,13 +137,20 @@ stage('install') {
             }
         }
        
-      stage('sonarqube-analysis') {
-
-            steps {
-               sh '''
-           
-               '''
-            }
+      stage("SonarQube test") { 
+            agent {         
+         docker {          
+           image 'maven'         
+              }       
+            }   
+       steps {
+                withSonarQubeEnv('Sonarqube') {
+                  sh 'mvn clean  sonar:sonar'
+              }
+              
+          }
+      }
+       
         }
 
 
@@ -188,7 +195,7 @@ stage('build ') {
                sh '''
              sudo  docker rm -f checking || true
             sudo  docker run -d -p 80:8080 devopseasylearning2021/kantin:$ImageTAG 
-              #curl ifconfig.co
+              curl ifconfig.co
                 '''
             }
         }
@@ -201,4 +208,4 @@ stage('build ') {
 
 
 
-}   
+   
