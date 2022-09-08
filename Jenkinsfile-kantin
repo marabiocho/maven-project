@@ -1,7 +1,8 @@
 
+
 pipeline {
     agent {
-                label ("jenkins-node1")
+                label ("jenkins-slave1")
             }
    
    environment {
@@ -54,7 +55,7 @@ pipeline {
 
         stage('clean') {
             agent {
-                label 'jenkins-node1'
+                label 'jenkins-slave1'
             }
 
             steps {
@@ -68,7 +69,7 @@ pipeline {
 
         stage('compile') {
             agent {
-                label 'jenkins-node1'
+                label 'jenkins-slave1'
             }
 
             steps {
@@ -80,7 +81,7 @@ pipeline {
 
 stage('validate') {
     agent {
-                label 'jenkins-node1'
+                label 'jenkins-slave1'
             }
 
             steps {
@@ -94,7 +95,7 @@ stage('validate') {
 
 stage('test') {
     agent {
-                label 'jenkins-node1'
+                label 'jenkins-slave1'
             }
 
             steps {
@@ -116,7 +117,7 @@ stage('package') {
 
 stage('verify') {
     agent {
-                label 'jenkins-node1'
+                label 'jenkins-slave1'
             }
 
             steps {
@@ -136,7 +137,14 @@ stage('install') {
             }
         }
        
-      
+      stage('sonarqube-analysis') {
+
+            steps {
+               sh '''
+           
+               '''
+            }
+        }
 
 
 
