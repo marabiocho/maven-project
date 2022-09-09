@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
 
-  <title>PARKING LOT: welcome to Devops made easy</title>
+  <title>LESLIE ENTERPRISE: welcome to Leslie company</title>
   <meta name="description" content="Parking Lot - Register and Get your Parking Slot.">
   <meta name="author" content="Liyas Thomas">
 
