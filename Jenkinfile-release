@@ -1,6 +1,6 @@
 pipeline {
     agent {
-                label ("Node1")
+                label ("ec2-user")
             }
 
 
@@ -89,11 +89,11 @@ options {
 
  post {
     success {
-      slackSend (channel: '#focus-group', color: 'good', message: "@here New realease certified by devt and request by $name\n Description: Release $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- Release $tag commited to github\n")
+      slackSend (channel: '#project', color: 'good', message: "@here New realease certified by devt and request by $name\n Description: Release $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- Release $tag commited to github\n")
     }
 
     failure {
-      slackSend (channel: '#focus-group', color: 'danger', message: "@here $tag failed, please investigate")
+      slackSend (channel: '#project', color: 'danger', message: "@here $tag failed, please investigate")
     }
 }
 
