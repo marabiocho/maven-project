@@ -14,15 +14,15 @@ options {
             parameters {
  
     string(name: 'branch',
-           defaultValue: 'develop',
+           defaultValue: 'kantin-feature',
            description: '''Branch to build and deploy from''')
 
     string(name: 'tag',
-           defaultValue: 'develop',
+           defaultValue: 'v1.0.0',
            description: '''Provide release tag''')
 
     string(name: 'Name',
-           defaultValue: 'Stephanie',
+           defaultValue: 'kantin',
            description: '''Please enter your first and last name''')
 
         
@@ -36,7 +36,7 @@ options {
                
                 sh '''
                 rm -rf ./*
-              git clone -b $branch https://github.com/devopseasylearning/maven-project.git
+              git clone -b $branch https://github.com/marabiocho/maven-project.git
               cp -r maven-project/* . 
               rm -rf maven-project 
                 '''
@@ -113,4 +113,3 @@ options {
 
 
 }
-
