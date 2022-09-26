@@ -45,6 +45,17 @@ options {
         }
 
 
+        stage('start docker deamon') {
+            steps {
+            sh '''
+                sudo service docker start
+                '''
+            }
+        }
+
+
+
+
           stage('Buiding docker images') {
             steps {
             sh '''
