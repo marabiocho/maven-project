@@ -1,8 +1,18 @@
 pipeline {
     agent {
-                label ("ec2-user")
-            }
-
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            
+    }
+  }
 
 options {
       buildDiscarder(logRotator(numToKeepStr: '20'))
