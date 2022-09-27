@@ -10,9 +10,12 @@ pipeline {
             image: maven:alpine
             command:
             - cat
-            
+            tty: true
+          
+        '''
     }
   }
+
 
 options {
       buildDiscarder(logRotator(numToKeepStr: '20'))
@@ -117,5 +120,9 @@ options {
       slackSend (channel: '#project', color: 'danger', message: "@here $tag failed, please investigate")
     }
 }
+
+
+
+
 
 }
