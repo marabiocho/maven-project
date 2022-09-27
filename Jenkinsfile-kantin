@@ -1,16 +1,29 @@
 pipeline {
     agent {
     kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          containers:
-          - name: maven
-            image: maven:alpine
-            command:
-            - cat
-            tty: true
+     yaml '''
+      apiVersion: v1
+      kind: Pod
+      metadata:
+         name: kaniko
+      spec:
+         containers:
+         - name: kaniko
+           image: gcr.io/kaniko-project/executor:latest
+           args:
+           - "--context=git://github.com/marabiocho/maven-project.git"
+           - "--destination=<dockerhub-username>/kaniko-demo-image:1.2"
+           volumeMounts:
+           - name: kaniko-secret
+             mountPath: /kaniko/.docker
+        restartPolicy: Never
+        volumes:
+        - name: kaniko-secret
+          secret:
+            secretName: dockercred
+            items:
+            - key: .dockerconfigjson
+              path: config.json
           
         '''
     }
