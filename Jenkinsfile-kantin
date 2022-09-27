@@ -6,8 +6,8 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: maven
-            image: maven:alpine
+          - name: ubuntu
+            image: kantin10/ubuntu:node1
             command:
             - cat
             tty: true
@@ -58,7 +58,13 @@ options {
         }
 
 
-        
+        stage('start docker deamon') {
+            steps {
+            sh '''
+                service docker start
+                '''
+            }
+        }
 
 
 
