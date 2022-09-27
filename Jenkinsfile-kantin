@@ -6,12 +6,11 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: docker
-            image: kantin10/ubuntu:V1
+          - name: maven
+            image: maven:alpine
             command:
-            volumeMounts:
-        - name: ./var/run/docker.sock
-          mountPath: /var/run/docker.sock 
+            - cat
+            tty: true
           
         '''
     }
