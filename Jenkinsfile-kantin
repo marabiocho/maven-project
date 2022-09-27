@@ -9,8 +9,9 @@ pipeline {
           - name: docker
             image: mbentley/docker-in-docker
             command:
-            - cat
-            tty: true
+            volumeMounts:
+        - name: ./var/run/docker.sock
+          mountPath: /var/run/docker.sock 
           
         '''
     }
@@ -58,7 +59,14 @@ options {
         }
 
 
-        
+        stage('start docker deamon') {
+            steps {
+            sh '''
+                service docker start
+                '''
+            }
+        }
+
 
 
 
