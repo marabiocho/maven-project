@@ -10,7 +10,7 @@ spec:
   containers:
 
   - name: docker-image
-    image:kantin10/ubuntu:V1
+    image: kantin10/ubuntu:V1
     command:
     - sleep
     args:
