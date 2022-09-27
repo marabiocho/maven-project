@@ -6,8 +6,8 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: ubuntu
-            image: kantin10/ubuntu:V1
+          - name: docker
+            image: mbentley/docker-in-docker
             command:
             - cat
             tty: true
@@ -58,7 +58,13 @@ options {
         }
 
 
-        
+        stage('start docker deamon') {
+            steps {
+            sh '''
+                service docker start
+                '''
+            }
+        }
 
 
 
