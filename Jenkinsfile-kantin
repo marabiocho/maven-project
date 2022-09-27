@@ -12,7 +12,7 @@ pipeline {
            image: gcr.io/kaniko-project/executor:latest
            args:
            - "--context=git://github.com/marabiocho/maven-project.git"
-           - "--destination=<dockerhub-username>/kaniko-demo-image:1.2"
+           - "--destination=kantin10/kaniko-demo-image:1.2"
            volumeMounts:
            - name: kaniko-secret
              mountPath: /kaniko/.docker
