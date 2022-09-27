@@ -11,8 +11,8 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     args:
-    - "--context=git://github.com/marabiocho/kubernetes-kaniko.git"
-    - "--destination=kantin10/kaniko-test-image:1.0"
+    - "--context=git:/github.com/marabiocho/maven-project.git/"
+    - "--destination=kantin10/kaniko-test-image:1.1"
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
