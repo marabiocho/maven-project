@@ -8,6 +8,14 @@ metadata:
   name: kaniko
 spec:
   containers:
+
+  - name: docker-image
+    image:kantin10/ubuntu:V1
+    command:
+    - sleep
+    args:
+    - 99d
+
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     args:
